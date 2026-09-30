@@ -1,0 +1,1 @@
+/root/rlinf_recap/RLinf/logs/cfg_rl/cfg_rl_openpi-20260929-00:58:47/run_cfg_rl.log

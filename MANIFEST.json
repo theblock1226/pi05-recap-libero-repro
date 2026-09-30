@@ -1,0 +1,35 @@
+{
+  "total_files": 185,
+  "total_bytes": 81408961,
+  "total_mib": 77.64,
+  "by_top": {
+    ".gitignore": {
+      "n": 1,
+      "bytes": 116
+    },
+    "EXCLUDED_WEIGHTS_AND_DATA.md": {
+      "n": 1,
+      "bytes": 1264
+    },
+    "README.md": {
+      "n": 1,
+      "bytes": 2024
+    },
+    "REPRODUCTION_REPORT.md": {
+      "n": 1,
+      "bytes": 1644
+    },
+    "artifacts": {
+      "n": 144,
+      "bytes": 81061021
+    },
+    "meta": {
+      "n": 5,
+      "bytes": 65480
+    },
+    "rlinf_overlay": {
+      "n": 32,
+      "bytes": 277412
+    }
+  }
+}

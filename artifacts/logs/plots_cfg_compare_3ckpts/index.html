@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"/><title>CFG 3000/6000/9000 对比</title>
+<style>body{font-family:ui-sans-serif,system-ui;margin:24px;max-width:980px;background:#0f1115;color:#e8eaed}
+h1{font-size:1.3rem}p{color:#9aa0a6}img{width:100%;border:1px solid #2a2f3a;border-radius:6px;background:#fff;margin:8px 0}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #2a2f3a;padding:6px 8px;text-align:right}</style></head><body>
+<h1>CFG-RL 检查点对比：3000 / 6000 / 9000</h1>
+<p>训练日志指标对比（非仿真成功率）。权重：6000与9000仍在盘；3000权重已删，指标来自日志。</p>
+| ckpt | loss | mae_n/a | lr | grad_norm | cond | pos_label |
+|---:|---:|---:|---:|---:|---:|---:|
+| 3000 | 0.0126 | - | 6e-06 | 0.124 | 0.281 | 0.312 |
+| 6000 | 0.0117 | - | 9.96e-06 | 0.103 | 0.273 | 0.305 |
+| 9000 | 0.0125 | - | 9.38e-06 | 0.105 | 0.352 | 0.383 |
+
+<img src="01_loss_all_ckpts.png"/>
+<img src="02_lr_grad_all_ckpts.png"/>
+<img src="03_snapshot_3ckpts.png"/>
+<img src="04_ratios_all_ckpts.png"/>
+</body></html>

@@ -1,0 +1,15 @@
+{
+  "checkpoint": "/root/rlinf_recap/deploy/cfg_rl_step9000",
+  "task_suite": "libero_10",
+  "task_id": 0,
+  "task": "put both the alphabet soup and the tomato sauce in the basket",
+  "num_trials": 3,
+  "successes": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "success_rate": 0.3333333333333333,
+  "note": "vanilla pi05 forward; CFG guidance_scale not applied in this smoke loader",
+  "render": "osmesa"
+}

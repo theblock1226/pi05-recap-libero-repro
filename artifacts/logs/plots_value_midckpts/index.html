@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"/><title>Value SFT mid ckpts</title>
+<style>body{font-family:ui-sans-serif,system-ui;margin:24px;max-width:980px;background:#0f1115;color:#e8eaed}
+h1{font-size:1.3rem}p{color:#9aa0a6}img{width:100%;border:1px solid #2a2f3a;border-radius:6px;background:#fff;margin:8px 0}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #2a2f3a;padding:6px 8px;text-align:right}th{text-align:center}</style></head><body>
+<h1>Value SFT 中间 ckpt 记录图（2520–2880，含 3000）</h1>
+<p>来自训练日志在存盘步的指标；验证集关闭，未做仿真 rollout。删除中间权重前的存档。</p>
+| ckpt | loss | mae | spearman | cat_acc_best | pred_mean | tgt_mean |
+|---:|---:|---:|---:|---:|---:|---:|
+| 2520 | 2.79 | 0.107 | 0.647 | 0.242 | -0.556 | -0.586 |
+| 2640 | 2.91 | 0.104 | 0.743 | 0.211 | -0.521 | -0.546 |
+| 2760 | 2.94 | 0.104 | 0.685 | 0.227 | -0.537 | -0.535 |
+| 2880 | 2.83 | 0.0903 | 0.738 | 0.18 | -0.55 | -0.52 |
+| 3000 | 2.75 | 0.0957 | 0.76 | 0.203 | -0.503 | -0.507 |
+
+<img src="01_value_sft_loss_mae_midckpts.png"/>
+<img src="02_value_sft_spearman_catacc.png"/>
+<img src="03_value_sft_ckpt_snapshots.png"/>
+<img src="04_value_sft_pred_vs_target.png"/>
+</body></html>

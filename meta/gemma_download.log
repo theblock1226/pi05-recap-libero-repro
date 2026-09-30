@@ -1,0 +1,2 @@
+Warning: `--token <value>` leaves your token in your shell history and in process listings. Run `hf auth login` once, or export `HF_TOKEN`, and drop the flag.
+path=/root/rlinf_recap/checkpoints/gemma-3-270m

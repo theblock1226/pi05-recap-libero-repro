@@ -1,0 +1,38 @@
+[2026-09-20 07:24:16,655][__main__][INFO] - Starting return computation...
+[2026-09-20 07:24:16,657][__main__][INFO] - Config:
+data:
+  data_root: null
+  train_data_paths:
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval
+    type: rollout
+  dataset_type: sft
+  gamma: 1.0
+  failure_reward: -300.0
+  tag: fail300
+  num_workers: 16
+
+[2026-09-20 07:24:16,657][__main__][INFO] - Processing 1 dataset(s)...
+[2026-09-20 07:24:16,657][__main__][INFO] - 
+============================================================
+[2026-09-20 07:24:16,657][__main__][INFO] - Dataset 1/1
+[2026-09-20 07:24:16,657][__main__][INFO] - ============================================================
+[2026-09-20 07:24:16,657][__main__][INFO] - Processing dataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval
+[2026-09-20 07:24:16,657][__main__][INFO] -   Type: rollout, Gamma: 1.0, Failure reward: -300.0
+[2026-09-20 07:24:16,658][__main__][INFO] - Found 64 parquet files
+[2026-09-20 07:24:16,663][__main__][INFO] - Using 16 parallel threads
+Processing parquet files:   0%|          | 0/64 [00:00<?, ?it/s]Processing parquet files:   2%|▏         | 1/64 [00:00<00:16,  3.89it/s]Processing parquet files:  48%|████▊     | 31/64 [00:00<00:00, 108.57it/s]Processing parquet files:  81%|████████▏ | 52/64 [00:00<00:00, 141.14it/s]Processing parquet files: 100%|██████████| 64/64 [00:00<00:00, 127.95it/s]
+[2026-09-20 07:24:17,244][__main__][INFO] - Wrote sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval/meta/returns_fail300.parquet (25493 rows, 0.0 MB)
+[2026-09-20 07:24:17,246][__main__][INFO] - 
+Statistics:
+[2026-09-20 07:24:17,247][__main__][INFO] -   Return: mean=-420.2369, std=220.1954, min=-779.0000, max=0.0000
+[2026-09-20 07:24:17,247][__main__][INFO] -   Reward: mean=-1.4329, std=11.3828, min=-300.0000, max=0.0000
+[2026-09-20 07:24:17,247][__main__][INFO] -   Total rows: 25493
+[2026-09-20 07:24:17,248][__main__][INFO] - Updated stats.json
+[2026-09-20 07:24:17,249][__main__][INFO] - Updated info.json with new features
+[2026-09-20 07:24:17,252][__main__][INFO] - 
+============================================================
+[2026-09-20 07:24:17,252][__main__][INFO] - Return computation complete!
+[2026-09-20 07:24:17,252][__main__][INFO] - ============================================================
+[2026-09-20 07:24:17,252][__main__][INFO] - Processed 1 dataset(s):
+[2026-09-20 07:24:17,252][__main__][INFO] -   /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval
+[2026-09-20 07:24:17,252][__main__][INFO] -     return: min=-779.00, max=0.00

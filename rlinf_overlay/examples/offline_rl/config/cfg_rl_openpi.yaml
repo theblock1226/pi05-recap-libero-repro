@@ -1,0 +1,102 @@
+# Usage: bash examples/offline_rl/policy_optimization/cfg_rl/run_cfg_rl.sh cfg_rl_openpi
+
+defaults:
+  - model/pi0_5@actor.model
+  - hybrid_engines/fsdp@actor.fsdp_config
+  - _self_
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:REPO_PATH}/examples/offline_rl/config/
+
+cluster:
+  num_nodes: 1
+  # 4x A6000; CFG uses FSDP no_shard + grad ckpt (official "all").
+  component_placement:
+    actor,env,rollout: all
+
+runner:
+  task_type: sft
+  logger:
+    log_path: "../results"
+    project_name: rlinf
+    experiment_name: "cfg_sft"
+    logger_backends: ["tensorboard"]
+
+  max_epochs: 30000
+  max_steps: -1
+  val_check_interval: -1
+  # ~7GB+/ckpt; keep interval so disk (~107G free) can hold several saves.
+  save_interval: 3000
+
+data:
+  # Video decode is heavy; 0 avoided past dataloader hangs on this host.
+  num_workers: 4
+  # Must match Step3 advantage.tag
+  advantage_tag: "fail300_N10_ckpt3000_q30"
+  balance_dataset_weights: true
+  seed: 42
+
+  train_data_paths:
+    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft"
+      type: "sft"
+      weight: 1.0
+    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train"
+      type: "rollout"
+      weight: 1.0
+
+algorithm:
+  adv_type: gae
+
+actor:
+  group_name: "ActorGroup"
+  training_backend: "fsdp"
+  # 32 OOM'd on 48GB A6000 (no_shard full pi05); keep small micro-batch.
+  micro_batch_size: 4
+  global_batch_size: 128
+  seed: 0
+
+  model:
+    precision: null
+    model_path: "/root/rlinf_recap/checkpoints/pi05_base_pytorch"
+    model_type: "cfg_model"
+    add_value_head: False
+    openpi:
+      config_name: "pi05_libero"
+      cfgrl_guidance_scale: 1.0
+      unconditional_prob: 0.1
+      train_expert_only: False
+      guidance_type: "positive"
+      positive_only_conditional: true
+
+  optim:
+    lr: 1.0e-5
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-8
+    weight_decay: 1.0e-10
+    clip_grad: 1.0
+    lr_scheduler: "cosine"
+    lr_warmup_steps: 5000
+    total_training_steps: 30000
+    min_lr: 0.0
+
+  fsdp_config:
+    strategy: "fsdp"
+    sharding_strategy: "no_shard"
+    use_orig_params: False
+    gradient_checkpointing: True
+    mixed_precision:
+      param_dtype: ${actor.model.precision}
+      reduce_dtype: ${actor.model.precision}
+      buffer_dtype: ${actor.model.precision}
+
+reward:
+  use_reward_model: False
+
+critic:
+  use_critic_model: False

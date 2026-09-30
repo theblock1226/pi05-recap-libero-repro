@@ -1,0 +1,335 @@
+[2026-09-28 00:52:25,953][rlinf.algorithms.offline.process.distributed][INFO] - Distributed mode enabled: 4 ranks
+[2026-09-28 00:52:25,953][rlinf.algorithms.offline.process.distributed][INFO] -   Backend: nccl, Timeout: 3600s
+[2026-09-28 00:52:25,953][__main__][INFO] - Starting advantage computation...
+[2026-09-28 00:52:25,955][__main__][INFO] - Config:
+advantage:
+  model:
+    model_type: recap_value_model
+    precision: bf16
+    is_lora: false
+    siglip_path: /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
+    gemma3_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+    tokenizer_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+    critic_expert_variant: gemma_1m
+    num_bins: 201
+    v_min: -1.0
+    v_max: 0.0
+    value_dropout: 0.0
+    action_dim: 32
+    action_horizon: 50
+    max_token_len: 200
+    action_expert_variant: gemma_300m
+    freeze_vision_encoder: false
+    train_expert_only: false
+    forward_mode: vla
+    max_language_len: 50
+    stop_gradient_to_vlm: false
+  value_checkpoint: /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000
+  batch_size: 64
+  flush_interval: 256
+  num_dataloader_workers_per_gpu: 4
+  prefetch_factor: 2
+  discount_next_value: true
+  positive_quantile: 0.3
+  tag: fail300_N10_ckpt3000_q30
+  returns_tag: fail300
+data:
+  model_type: pi05
+  train_data_paths:
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+    robot_type: libero
+    type: sft
+    weight: 1.0
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+    robot_type: libero
+    type: rollout
+    weight: 1.0
+  advantage_lookahead_step: 10
+  gamma: 1.0
+distributed:
+  enabled: true
+  backend: nccl
+  timeout: 3600
+
+[2026-09-28 00:52:25,960][rlinf.models.embodiment.value_model.recap.modeling_critic][INFO] - Loading value model from /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000
+[2026-09-28 00:52:25,961][rlinf.models.embodiment.value_model.recap.modeling_critic][INFO] - Creating ValueCriticModel: expert=gemma_1m
+[2026-09-28 00:52:25,961][rlinf.models.embodiment.value_model.recap.value_expert][INFO] - Creating ValueExpert: experts=['value'], freeze_vision_encoder=False, freeze_vlm=False
+[2026-09-28 00:52:25,962][rlinf.models.embodiment.value_model.recap.value_expert][INFO] -   Loading SigLIP2 from /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
+[2026-09-28 00:52:26,022][rlinf.models.embodiment.value_model.recap.value_expert][INFO] -   Loading Gemma3 from /root/rlinf_recap/checkpoints/gemma-3-270m
+[2026-09-28 00:52:26,545][rlinf.models.embodiment.value_model.recap.value_expert][INFO] -   Fresh projection: 1152 → 640 (randomly initialized)
+[2026-09-28 00:52:27,077][rlinf.models.embodiment.value_model.recap.value_expert][INFO] -   Expert 'value': width=128, depth=4, head_dim=256
+[2026-09-28 00:52:28,177][rlinf.models.embodiment.value_model.recap.value_expert][INFO] - Applying mixed precision: bf16 backbone + fp32 for selected layers
+[2026-09-28 00:52:28,182][rlinf.models.embodiment.value_model.recap][INFO] - Created ValueCriticModel (V function)
+[2026-09-28 00:52:29,736][rlinf.models.embodiment.value_model.recap][INFO] - Loaded fine-tuned checkpoint from /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000/actor/model_state_dict/full_weights.pt (missing=0, unexpected=0)
+[2026-09-28 00:52:29,815][rlinf.models.embodiment.value_model.recap.modeling_critic][INFO] -   Using explicit tokenizer_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+[2026-09-28 00:52:31,483][rlinf.models.embodiment.value_model.recap.modeling_critic][WARNING] - Could not find norm stats in /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000, proceeding without normalization
+[2026-09-28 00:52:31,509][rlinf.models.embodiment.value_model.recap.modeling_critic][WARNING] - Could not find norm stats in /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000, proceeding without normalization
+[2026-09-28 00:52:31,895][rlinf.models.embodiment.value_model.recap.modeling_critic][INFO] - ValueCriticModel.from_checkpoint ready for inference
+[2026-09-28 00:52:31,896][__main__][INFO] - Computed global return range from stats.json: [-779.0, 0.0]
+[2026-09-28 00:52:31,905][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:52:31,910][__main__][INFO] - Grand total: 392471 samples across 2 datasets (this rank's shard)
+[2026-09-28 00:52:31,911][__main__][INFO] - Returns tag: fail300, Advantages tag: fail300_N10_ckpt3000_q30
+[2026-09-28 00:52:31,911][__main__][INFO] - 
+============================================================
+[2026-09-28 00:52:31,911][__main__][INFO] - Processing dataset: libero10_task0_sft
+[2026-09-28 00:52:31,911][__main__][INFO] - ============================================================
+[2026-09-28 00:52:31,914][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:52:31,915][__main__][INFO] - Dataset features: ['image', 'wrist_image', 'state', 'actions', 'timestamp', 'frame_index', 'episode_index', 'index', 'task_index', 'return', 'reward', 'prompt']
+[2026-09-28 00:52:31,918][rlinf.models.embodiment.value_model.recap.modeling_critic][WARNING] - Could not find norm stats in /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000, proceeding without normalization
+[2026-09-28 00:52:31,922][rlinf.data.datasets.recap.utils][INFO] - Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft/meta/returns_fail300.parquet (30 episodes)
+[2026-09-28 00:52:31,922][__main__][INFO] - Loading dataset (no delta_timestamps for ~50x faster access):
+[2026-09-28 00:52:31,922][__main__][INFO] -   Dataset path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+[2026-09-28 00:52:31,922][__main__][INFO] -   FPS: 20
+[2026-09-28 00:52:32,346][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:52:32,421][rlinf.models.embodiment.value_model.recap.modeling_critic][WARNING] - Could not find norm stats in /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000, proceeding without normalization
+[2026-09-28 00:52:32,815][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:52:32,962][__main__][INFO] - Loaded dataset: 8005 samples, 30 episodes
+[2026-09-28 00:52:32,962][__main__][INFO] -   Using global return_range: [-779.0, 0.0]
+[2026-09-28 00:52:32,962][__main__][INFO] -   Using batch inference with batch_size: 64
+[2026-09-28 00:52:32,962][__main__][INFO] - Computing advantages for 8005 samples (total in dataset: 8005)...
+[2026-09-28 00:52:32,962][__main__][INFO] -   gamma: 1.0, advantage_lookahead_step: 10
+[2026-09-28 00:52:32,962][__main__][INFO] -   return_range: [-779.0, 0.0]
+[2026-09-28 00:52:32,962][__main__][INFO] -   Using ValueCriticModel with batch inference
+[2026-09-28 00:52:32,962][__main__][INFO] -   Using precomputed reward/return from dataset
+[2026-09-28 00:52:32,962][__main__][INFO] -   Distributed mode: 4 GPUs
+[2026-09-28 00:52:32,962][__main__][INFO] -   [Rank 0] Processing samples 0 to 2002 (2002 samples)
+[2026-09-28 00:52:32,963][__main__][INFO] -   [Rank 0] Extended inference range: 0 to 2012 (2012 samples)
+[2026-09-28 00:52:32,963][__main__][INFO] -   Memory management: flush to disk every ~16384 samples
+[2026-09-28 00:52:32,963][__main__][INFO] -   Using DataLoader: workers_per_gpu=4, prefetch_factor=2, batch_size=64, cpu_prep_in_workers=True
+[2026-09-28 00:52:32,963][__main__][INFO] - Phase 1: inferring V(o_t) for 2012 samples in 32 batches
+[2026-09-28 00:53:31,047][__main__][INFO] - [Timing] avg_fetch=509ms  avg_infer=1301ms  GPU_busy≈72%  batches=32
+[2026-09-28 00:53:31,632][__main__][INFO] -   Flushed chunk 1 (2002 samples) to disk. Total flushed: 2002
+[2026-09-28 00:53:31,632][__main__][INFO] - 
+[Rank 0] Value and reward Statistics (local shard, 2002 samples):
+[2026-09-28 00:53:31,632][__main__][INFO] -   [Rank 0] V(o_t):    mean=-0.2638, std=0.0775, min=-0.4740, max=-0.0594
+[2026-09-28 00:53:31,632][__main__][INFO] -   [Rank 0] V(o_N):    mean=-0.2495, std=0.0907, min=-0.4740, max=0.0000
+[2026-09-28 00:53:31,632][__main__][INFO] -   [Rank 0] R_raw:     mean=-9.7802, std=1.2210, min=-10.0000, max=0.0000
+[2026-09-28 00:53:31,632][__main__][INFO] - Merging 1 temporary chunks (2002 total samples)...
+[2026-09-28 00:53:34,123][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:34,128][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:34,129][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:34,130][__main__][INFO] - 
+Advantage Statistics for libero10_task0_sft:
+[2026-09-28 00:53:34,130][__main__][INFO] -   Mean: 0.0028
+[2026-09-28 00:53:34,130][__main__][INFO] -   Std: 0.0943
+[2026-09-28 00:53:34,131][__main__][INFO] -   Min: -0.4462
+[2026-09-28 00:53:34,131][__main__][INFO] -   Max: 0.5062
+[2026-09-28 00:53:34,131][__main__][INFO] -   V(o_t) mean: -0.2811
+[2026-09-28 00:53:34,131][__main__][INFO] -   V(o_N) mean: -0.2657
+[2026-09-28 00:53:34,131][__main__][INFO] -   reward_sum mean: -0.0126
+[2026-09-28 00:53:34,131][__main__][INFO] - 
+============================================================
+[2026-09-28 00:53:34,131][__main__][INFO] - Processing dataset: libero10_task0_train
+[2026-09-28 00:53:34,131][__main__][INFO] - ============================================================
+[2026-09-28 00:53:34,132][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:34,137][__main__][INFO] - Dataset features: ['image', 'wrist_image', 'state', 'actions', 'timestamp', 'frame_index', 'episode_index', 'index', 'task_index', 'done', 'is_success', 'return', 'reward', 'prompt']
+[2026-09-28 00:53:41,951][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:42,416][rlinf.data.datasets.recap.utils][INFO] - Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train/meta/returns_fail300.parquet (4096 episodes)
+[2026-09-28 00:53:42,417][__main__][INFO] - Loading dataset (no delta_timestamps for ~50x faster access):
+[2026-09-28 00:53:42,417][__main__][INFO] -   Dataset path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+[2026-09-28 00:53:42,417][__main__][INFO] -   FPS: 10
+[2026-09-28 00:53:42,418][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:45,747][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:53:46,109][root][WARNING] - 
+The dataset you requested (/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train) is in 2.0 format.
+While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+```
+python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+```
+
+If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+
+[2026-09-28 00:54:01,861][__main__][INFO] - Loaded dataset: 1561874 samples, 4096 episodes
+[2026-09-28 00:54:01,862][__main__][INFO] -   Using global return_range: [-779.0, 0.0]
+[2026-09-28 00:54:01,863][__main__][INFO] -   Using batch inference with batch_size: 64
+[2026-09-28 00:54:01,870][__main__][INFO] - Computing advantages for 1561874 samples (total in dataset: 1561874)...
+[2026-09-28 00:54:01,871][__main__][INFO] -   gamma: 1.0, advantage_lookahead_step: 10
+[2026-09-28 00:54:01,871][__main__][INFO] -   return_range: [-779.0, 0.0]
+[2026-09-28 00:54:01,871][__main__][INFO] -   Using ValueCriticModel with batch inference
+[2026-09-28 00:54:01,871][__main__][INFO] -   Using precomputed reward/return from dataset
+[2026-09-28 00:54:01,871][__main__][INFO] -   Distributed mode: 4 GPUs
+[2026-09-28 00:54:01,871][__main__][INFO] -   [Rank 0] Processing samples 0 to 390469 (390469 samples)
+[2026-09-28 00:54:01,871][__main__][INFO] -   [Rank 0] Extended inference range: 0 to 390479 (390479 samples)
+[2026-09-28 00:54:01,871][__main__][INFO] -   Memory management: flush to disk every ~16384 samples
+[2026-09-28 00:54:01,871][__main__][INFO] -   Using DataLoader: workers_per_gpu=4, prefetch_factor=2, batch_size=64, cpu_prep_in_workers=True
+[2026-09-28 00:54:01,877][__main__][INFO] - Phase 1: inferring V(o_t) for 390479 samples in 6102 batches
+[2026-09-28 10:36:14,779][__main__][INFO] - [Timing] avg_fetch=4493ms  avg_infer=1230ms  GPU_busy≈21%  batches=6102
+[2026-09-28 10:36:15,273][__main__][INFO] -   Flushed chunk 1 (16384 samples) to disk. Total flushed: 16384
+[2026-09-28 10:36:15,688][__main__][INFO] -   Flushed chunk 2 (16384 samples) to disk. Total flushed: 32768
+[2026-09-28 10:36:16,087][__main__][INFO] -   Flushed chunk 3 (16384 samples) to disk. Total flushed: 49152
+[2026-09-28 10:36:16,485][__main__][INFO] -   Flushed chunk 4 (16384 samples) to disk. Total flushed: 65536
+[2026-09-28 10:36:16,875][__main__][INFO] -   Flushed chunk 5 (16384 samples) to disk. Total flushed: 81920
+[2026-09-28 10:36:17,268][__main__][INFO] -   Flushed chunk 6 (16384 samples) to disk. Total flushed: 98304
+[2026-09-28 10:36:17,682][__main__][INFO] -   Flushed chunk 7 (16384 samples) to disk. Total flushed: 114688
+[2026-09-28 10:36:18,082][__main__][INFO] -   Flushed chunk 8 (16384 samples) to disk. Total flushed: 131072
+[2026-09-28 10:36:18,482][__main__][INFO] -   Flushed chunk 9 (16384 samples) to disk. Total flushed: 147456
+[2026-09-28 10:36:18,899][__main__][INFO] -   Flushed chunk 10 (16384 samples) to disk. Total flushed: 163840
+[2026-09-28 10:36:19,298][__main__][INFO] -   Flushed chunk 11 (16384 samples) to disk. Total flushed: 180224
+[2026-09-28 10:36:19,697][__main__][INFO] -   Flushed chunk 12 (16384 samples) to disk. Total flushed: 196608
+[2026-09-28 10:36:20,080][__main__][INFO] -   Flushed chunk 13 (16384 samples) to disk. Total flushed: 212992
+[2026-09-28 10:36:20,452][__main__][INFO] -   Flushed chunk 14 (16384 samples) to disk. Total flushed: 229376
+[2026-09-28 10:36:20,840][__main__][INFO] -   Flushed chunk 15 (16384 samples) to disk. Total flushed: 245760
+[2026-09-28 10:36:21,215][__main__][INFO] -   Flushed chunk 16 (16384 samples) to disk. Total flushed: 262144
+[2026-09-28 10:36:21,596][__main__][INFO] -   Flushed chunk 17 (16384 samples) to disk. Total flushed: 278528
+[2026-09-28 10:36:21,964][__main__][INFO] -   Flushed chunk 18 (16384 samples) to disk. Total flushed: 294912
+[2026-09-28 10:36:22,336][__main__][INFO] -   Flushed chunk 19 (16384 samples) to disk. Total flushed: 311296
+[2026-09-28 10:36:22,736][__main__][INFO] -   Flushed chunk 20 (16384 samples) to disk. Total flushed: 327680
+[2026-09-28 10:36:23,128][__main__][INFO] -   Flushed chunk 21 (16384 samples) to disk. Total flushed: 344064
+[2026-09-28 10:36:23,531][__main__][INFO] -   Flushed chunk 22 (16384 samples) to disk. Total flushed: 360448
+[2026-09-28 10:36:23,914][__main__][INFO] -   Flushed chunk 23 (16384 samples) to disk. Total flushed: 376832
+[2026-09-28 10:36:24,285][__main__][INFO] -   Flushed chunk 24 (13637 samples) to disk. Total flushed: 390469
+[2026-09-28 10:36:24,286][__main__][INFO] - 
+[Rank 0] Value and reward Statistics (local shard, 390469 samples):
+[2026-09-28 10:36:24,286][__main__][INFO] -   [Rank 0] V(o_t):    mean=-0.5071, std=0.2212, min=-0.9865, max=-0.0099
+[2026-09-28 10:36:24,286][__main__][INFO] -   [Rank 0] V(o_N):    mean=-0.4892, std=0.2312, min=-0.9626, max=0.0000
+[2026-09-28 10:36:24,286][__main__][INFO] -   [Rank 0] R_raw:     mean=-13.9285, std=34.0938, min=-309.0000, max=0.0000
+[2026-09-28 10:36:24,286][__main__][INFO] - Merging 24 temporary chunks (390469 total samples)...
+[2026-09-28 10:56:45,148][__main__][INFO] - 
+Advantage Statistics for libero10_task0_train:
+[2026-09-28 10:56:45,153][__main__][INFO] -   Mean: 0.0000
+[2026-09-28 10:56:45,164][__main__][INFO] -   Std: 0.0778
+[2026-09-28 10:56:45,167][__main__][INFO] -   Min: -0.6565
+[2026-09-28 10:56:45,169][__main__][INFO] -   Max: 0.6644
+[2026-09-28 10:56:45,173][__main__][INFO] -   V(o_t) mean: -0.5057
+[2026-09-28 10:56:45,178][__main__][INFO] -   V(o_N) mean: -0.4879
+[2026-09-28 10:56:45,185][__main__][INFO] -   reward_sum mean: -0.0178
+[2026-09-28 10:56:45,209][__main__][INFO] - 
+============================================================
+[2026-09-28 10:56:45,209][__main__][INFO] - Unified Advantage Threshold (across ALL datasets)
+[2026-09-28 10:56:45,209][__main__][INFO] - ============================================================
+[2026-09-28 10:56:45,209][__main__][INFO] -   Number of datasets: 2
+[2026-09-28 10:56:45,209][__main__][INFO] -   Samples per dataset: [8005, 1561874]
+[2026-09-28 10:56:45,209][__main__][INFO] -   Total samples: 1569879
+[2026-09-28 10:56:45,210][__main__][INFO] -   Combined advantage range: [-0.6565, 0.6644]
+[2026-09-28 10:56:45,211][__main__][INFO] -   Combined advantage mean: 0.0001
+[2026-09-28 10:56:45,211][__main__][INFO] -   Positive quantile: 0.3 (top 30% positive)
+[2026-09-28 10:56:45,211][__main__][INFO] -   Unified threshold (at 70th percentile): 0.0126
+[2026-09-28 10:56:45,213][__main__][INFO] -   Total samples with positive advantage: 470965
+[2026-09-28 10:56:45,213][__main__][INFO] - 
+  Per-dataset positive rates (using unified threshold):
+[2026-09-28 10:56:45,213][__main__][INFO] -     libero10_task0_sft: 2639/8005 (33.0%)
+[2026-09-28 10:56:45,216][__main__][INFO] -     libero10_task0_train: 468326/1561874 (30.0%)
+[2026-09-28 10:56:45,216][__main__][INFO] - 
+============================================================
+[2026-09-28 10:56:45,216][__main__][INFO] - Saving Advantages
+[2026-09-28 10:56:45,216][__main__][INFO] - ============================================================
+[2026-09-28 10:56:45,216][__main__][INFO] -   Tag: fail300_N10_ckpt3000_q30
+[2026-09-28 10:56:45,226][__main__][INFO] -   Dataset type is sft, forcing all advantage labels to True (8005 entries)
+[2026-09-28 10:56:45,227][__main__][INFO] -   Saved advantages_fail300_N10_ckpt3000_q30.parquet to /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft/meta (8005 entries)
+[2026-09-28 10:56:47,109][__main__][INFO] -   Saved /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft/meta/mixture_config.yaml
+[2026-09-28 10:56:48,544][__main__][INFO] -   Saved advantages_fail300_N10_ckpt3000_q30.parquet to /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train/meta (1561874 entries)
+[2026-09-28 10:56:48,547][__main__][INFO] -   Saved /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train/meta/mixture_config.yaml
+[2026-09-28 10:56:48,547][__main__][INFO] - 
+Advantage computation complete!

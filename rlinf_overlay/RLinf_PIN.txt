@@ -1,0 +1,2 @@
+RLinf_commit: 9f497c52e626e04c21e79f97d90e90f3903c4fb6
+RLinf_remote: https://ghproxy.net/https://github.com/RLinf/RLinf.git

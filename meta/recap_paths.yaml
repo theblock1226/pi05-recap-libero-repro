@@ -1,0 +1,24 @@
+# RLinf RECAP model/data paths (updated 2026-09-20)
+
+# Step 2 value model
+actor:
+  model:
+    siglip_path: /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
+    gemma3_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+    tokenizer_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+
+# Step 4 CFG policy
+actor_cfg:
+  model_path: /root/rlinf_recap/checkpoints/pi05_base_pytorch
+  advantage_tag: fail300_N10_ckpt3000_q30
+  openpi_config_name: pi05_libero
+
+paths:
+  rlinf_code: /root/rlinf_recap/RLinf
+  siglip: /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
+  gemma3: /root/rlinf_recap/checkpoints/gemma-3-270m
+  pi05_pytorch: /root/rlinf_recap/checkpoints/pi05_base_pytorch
+  dataset_root: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data
+  sft: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+  rollout: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+  eval: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval

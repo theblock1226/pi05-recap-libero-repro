@@ -1,0 +1,30 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+/root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+2026-09-30 06:49:28,123 INFO: Loading policy from /root/rlinf_recap/deploy/cfg_rl_step6000
+2026-09-30 06:49:28,123 INFO: Loading model...
+2026-09-30 06:50:15,317 INFO: Norm stats not found in checkpoints/torch/pi0_libero/assets/physical-intelligence/libero, skipping.
+2026-09-30 06:50:15,322 INFO: Loaded norm stats from /root/rlinf_recap/deploy/cfg_rl_step6000/physical-intelligence/libero
+2026-09-30 06:50:17,394 INFO: Policy loaded in 49.3s
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+2026-09-30 06:50:17,398 INFO: Task[0]: put both the alphabet soup and the tomato sauce in the basket
+task0:   0%|          | 0/10 [00:00<?, ?it/s]2026-09-30 06:51:43,182 INFO: trial 0 success=True steps=331
+2026-09-30 06:51:43,961 INFO: saved video /root/rlinf_recap/logs/libero_eval_cfg6000_task0_x10/videos/task0_trial0.mp4 (321 frames)
+task0:  10%|█         | 1/10 [01:24<12:38, 84.22s/it]2026-09-30 06:52:59,687 INFO: trial 1 success=True steps=306
+task0:  20%|██        | 2/10 [02:39<10:33, 79.23s/it]2026-09-30 06:54:33,218 INFO: trial 2 success=True steps=387
+task0:  30%|███       | 3/10 [04:13<10:00, 85.76s/it]2026-09-30 06:56:39,234 INFO: trial 3 success=False steps=530
+task0:  40%|████      | 4/10 [06:19<10:09, 101.65s/it]2026-09-30 06:58:44,677 INFO: trial 4 success=False steps=530
+task0:  50%|█████     | 5/10 [08:24<09:11, 110.23s/it]2026-09-30 07:00:13,599 INFO: trial 5 success=True steps=370
+task0:  60%|██████    | 6/10 [09:53<06:51, 102.99s/it]2026-09-30 07:02:21,696 INFO: trial 6 success=False steps=530
+task0:  70%|███████   | 7/10 [12:01<05:33, 111.20s/it]2026-09-30 07:04:27,637 INFO: trial 7 success=False steps=530
+task0:  80%|████████  | 8/10 [14:07<03:51, 115.89s/it]2026-09-30 07:06:32,450 INFO: trial 8 success=False steps=530
+task0:  90%|█████████ | 9/10 [16:12<01:58, 118.68s/it]2026-09-30 07:08:34,961 INFO: trial 9 success=False steps=530
+task0: 100%|██████████| 10/10 [18:15<00:00, 119.86s/it]task0: 100%|██████████| 10/10 [18:15<00:00, 109.52s/it]
+2026-09-30 07:08:35,526 INFO: DONE success_rate=0.400 summary={'checkpoint': '/root/rlinf_recap/deploy/cfg_rl_step6000', 'task_suite': 'libero_10', 'task_id': 0, 'task': 'put both the alphabet soup and the tomato sauce in the basket', 'num_trials': 10, 'successes': [1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0], 'success_rate': 0.4, 'note': 'vanilla pi05 forward; CFG guidance_scale not applied; control vs cfg9000 Task0', 'render': 'osmesa', 'elapsed_sec': 1147.4023187160492}
+SUMMARY {"checkpoint": "/root/rlinf_recap/deploy/cfg_rl_step6000", "task_suite": "libero_10", "task_id": 0, "task": "put both the alphabet soup and the tomato sauce in the basket", "num_trials": 10, "successes": [1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0], "success_rate": 0.4, "note": "vanilla pi05 forward; CFG guidance_scale not applied; control vs cfg9000 Task0", "render": "osmesa", "elapsed_sec": 1147.4023187160492}

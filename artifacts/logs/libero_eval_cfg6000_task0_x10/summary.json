@@ -1,0 +1,23 @@
+{
+  "checkpoint": "/root/rlinf_recap/deploy/cfg_rl_step6000",
+  "task_suite": "libero_10",
+  "task_id": 0,
+  "task": "put both the alphabet soup and the tomato sauce in the basket",
+  "num_trials": 10,
+  "successes": [
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "success_rate": 0.4,
+  "note": "vanilla pi05 forward; CFG guidance_scale not applied; control vs cfg9000 Task0",
+  "render": "osmesa",
+  "elapsed_sec": 1147.4023187160492
+}

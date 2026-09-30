@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>RECAP Value 曲线</title>
+<style>
+body{font-family:ui-sans-serif,system-ui,sans-serif;margin:24px;max-width:980px;background:#0f1115;color:#e8eaed}
+h1{font-size:1.4rem;font-weight:600}
+h2{font-size:1.1rem;margin-top:2rem;font-weight:500}
+p{color:#9aa0a6;line-height:1.5}
+img{width:100%;border:1px solid #2a2f3a;border-radius:6px;background:#fff}
+code{background:#1a1f2a;padding:2px 6px;border-radius:4px}
+</style>
+</head>
+<body>
+<h1>RECAP 可画曲线（当前阶段）</h1>
+<p>Source: <code>returns_fail300.parquet</code> + Value SFT log · Step2 尚未结束，Advantage 需等 Step3。</p>
+<h2>1. Return-to-go 价值目标曲线 \(R_t\)（V 的监督目标）</h2>
+<p>SFT 子集 30 episodes / 8005 frames；粗线为按帧均值±std，细线为 5 条代表轨迹。</p>
+<img src="01_return_to_go_value_targets.png" alt="return-to-go"/>
+<h2>2. Value Model SFT：loss / mae</h2>
+<p>续训区间 step 1441→2615（目标 3000）；最新 loss=3.01, mae=0.109。</p>
+<img src="02_value_sft_loss_mae.png" alt="sft loss mae"/>
+</body>
+</html>

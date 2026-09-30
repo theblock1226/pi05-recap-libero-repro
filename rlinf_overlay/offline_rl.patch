@@ -1,0 +1,274 @@
+diff --git a/examples/offline_rl/advantage_labeling/recap/process/compute_advantages.py b/examples/offline_rl/advantage_labeling/recap/process/compute_advantages.py
+index 15e3e48..4259e18 100644
+--- a/examples/offline_rl/advantage_labeling/recap/process/compute_advantages.py
++++ b/examples/offline_rl/advantage_labeling/recap/process/compute_advantages.py
+@@ -290,6 +290,7 @@ def load_lerobot_dataset(
+     dataset = LeRobotDataset(
+         str(dataset_path),
+         download_videos=False,
++        video_backend="pyav",
+     )
+     dataset.hf_dataset.set_transform(decode_image_struct_batch)
+ 
+diff --git a/examples/offline_rl/config/cfg_rl_openpi.yaml b/examples/offline_rl/config/cfg_rl_openpi.yaml
+index 48c8f0a..83eb310 100644
+--- a/examples/offline_rl/config/cfg_rl_openpi.yaml
++++ b/examples/offline_rl/config/cfg_rl_openpi.yaml
+@@ -15,6 +15,7 @@ hydra:
+ 
+ cluster:
+   num_nodes: 1
++  # 4x A6000; CFG uses FSDP no_shard + grad ckpt (official "all").
+   component_placement:
+     actor,env,rollout: all
+ 
+@@ -29,18 +30,24 @@ runner:
+   max_epochs: 30000
+   max_steps: -1
+   val_check_interval: -1
++  # ~7GB+/ckpt; keep interval so disk (~107G free) can hold several saves.
+   save_interval: 3000
+ 
+ data:
+-  num_workers: 8
+-  advantage_tag: null
++  # Video decode is heavy; 0 avoided past dataloader hangs on this host.
++  num_workers: 4
++  # Must match Step3 advantage.tag
++  advantage_tag: "fail300_N10_ckpt3000_q30"
+   balance_dataset_weights: true
+   seed: 42
+ 
+   train_data_paths:
+-    - dataset_path: "/path/to/sft_dataset"
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft"
+       type: "sft"
+       weight: 1.0
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train"
++      type: "rollout"
++      weight: 1.0
+ 
+ algorithm:
+   adv_type: gae
+@@ -48,13 +55,14 @@ algorithm:
+ actor:
+   group_name: "ActorGroup"
+   training_backend: "fsdp"
+-  micro_batch_size: 32
+-  global_batch_size: 512
++  # 32 OOM'd on 48GB A6000 (no_shard full pi05); keep small micro-batch.
++  micro_batch_size: 4
++  global_batch_size: 128
+   seed: 0
+ 
+   model:
+     precision: null
+-    model_path: "/path/to/pi05_base_pytorch"
++    model_path: "/root/rlinf_recap/checkpoints/pi05_base_pytorch"
+     model_type: "cfg_model"
+     add_value_head: False
+     openpi:
+diff --git a/examples/offline_rl/config/model/pi0_5.yaml b/examples/offline_rl/config/model/pi0_5.yaml
+index a8cf6d0..43823b5 100644
+--- a/examples/offline_rl/config/model/pi0_5.yaml
++++ b/examples/offline_rl/config/model/pi0_5.yaml
+@@ -1,7 +1,7 @@
+ model_type: "openpi"
+ 
+ # Model path - should be set in specific config files
+-model_path: "/path/to/model/openpi"
++model_path: "/root/rlinf_recap/checkpoints/pi05_base_pytorch"
+ 
+ precision: null # for openpi, precision is null, please do not change this value
+ 
+diff --git a/examples/offline_rl/config/model/recap_value_model.yaml b/examples/offline_rl/config/model/recap_value_model.yaml
+index d73905c..a385dd9 100644
+--- a/examples/offline_rl/config/model/recap_value_model.yaml
++++ b/examples/offline_rl/config/model/recap_value_model.yaml
+@@ -5,9 +5,9 @@ precision: bf16
+ # Not supported for this model
+ is_lora: false
+ 
+-siglip_path: /path/to/siglip2-so400m-patch14-224
+-gemma3_path: /path/to/gemma-3-270m
+-tokenizer_path: /path/to/gemma-3-270m
++siglip_path: /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
++gemma3_path: /root/rlinf_recap/checkpoints/gemma-3-270m
++tokenizer_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+ 
+ # "gemma_1m" | "gemma_50m" | "gemma_100m" | "gemma_150m" | "gemma_300m" | "gemma_2b"
+ critic_expert_variant: "gemma_1m"
+diff --git a/examples/offline_rl/config/model/steam_value_model.yaml b/examples/offline_rl/config/model/steam_value_model.yaml
+index 4a00d60..b21ec9f 100644
+--- a/examples/offline_rl/config/model/steam_value_model.yaml
++++ b/examples/offline_rl/config/model/steam_value_model.yaml
+@@ -12,8 +12,8 @@ is_lora: false
+ # tokenizer_path; the backbone loads vision/language encoders via
+ # vision_repo_id / language_repo_id.
+ vision_repo_id: /path/to/siglip-so400m-patch14-384
+-language_repo_id: /path/to/gemma-3-270m
+-tokenizer_path: /path/to/gemma-3-270m
++language_repo_id: /root/rlinf_recap/checkpoints/gemma-3-270m
++tokenizer_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+ 
+ # Architecture
+ fusion_hidden_dim: 512
+diff --git a/examples/offline_rl/config/recap_compute_advantages.yaml b/examples/offline_rl/config/recap_compute_advantages.yaml
+index 8ffa4a3..0323d55 100644
+--- a/examples/offline_rl/config/recap_compute_advantages.yaml
++++ b/examples/offline_rl/config/recap_compute_advantages.yaml
+@@ -7,21 +7,22 @@ defaults:
+   - model/recap_value_model@advantage.model
+ 
+ advantage:
+-  value_checkpoint: /path/to/value_checkpoint
+-  batch_size: 1024
++  value_checkpoint: /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_3000
++  # Inference batch; 1024 OOMs on 48GB with video decode — keep modest.
++  batch_size: 64
+   flush_interval: 256
+-  num_dataloader_workers_per_gpu: 12
++  num_dataloader_workers_per_gpu: 4
+   prefetch_factor: 2
+   discount_next_value: true
+   positive_quantile: 0.3
+-  tag: null
+-  returns_tag: null
++  tag: "fail300_N10_ckpt3000_q30"
++  returns_tag: "fail300"
+ 
+   model:
+     critic_expert_variant: "gemma_1m"
+-    tokenizer_path: /path/to/gemma-3-270m
+-    siglip_path: /path/to/siglip2-so400m-patch14-224
+-    gemma3_path: /path/to/gemma-3-270m
++    tokenizer_path: /root/rlinf_recap/checkpoints/gemma-3-270m
++    siglip_path: /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
++    gemma3_path: /root/rlinf_recap/checkpoints/gemma-3-270m
+ 
+ data:
+   # openpi variant the value model was trained with ("pi0" / "pi05"). Must
+@@ -30,10 +31,14 @@ data:
+   model_type: "pi05"
+ 
+   train_data_paths:
+-    - dataset_path: "/path/to/sft_dataset"
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft"
+       robot_type: "libero"
+       type: "sft"
+       weight: 1.0
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train"
++      robot_type: "libero"
++      type: "rollout"
++      weight: 1.0
+ 
+   advantage_lookahead_step: 10
+   gamma: 1.0
+diff --git a/examples/offline_rl/config/recap_compute_returns.yaml b/examples/offline_rl/config/recap_compute_returns.yaml
+index eb1256b..248e937 100644
+--- a/examples/offline_rl/config/recap_compute_returns.yaml
++++ b/examples/offline_rl/config/recap_compute_returns.yaml
+@@ -4,15 +4,15 @@
+ data:
+   data_root: null
+   train_data_paths:
+-    - dataset_path: /path/to/sft_dataset
++    - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+       type: sft
+-    - dataset_path: /path/to/rollout_dataset
++    - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+       type: rollout
+ 
+   dataset_type: "sft"
+   gamma: 1.0
+   failure_reward: -300.0
+-  tag: null
++  tag: "fail300"
+   num_workers: 128
+ 
+ hydra:
+diff --git a/examples/offline_rl/config/recap_value_model_sft.yaml b/examples/offline_rl/config/recap_value_model_sft.yaml
+index 285570c..233d8ff 100644
+--- a/examples/offline_rl/config/recap_value_model_sft.yaml
++++ b/examples/offline_rl/config/recap_value_model_sft.yaml
+@@ -15,8 +15,9 @@ hydra:
+ 
+ cluster:
+   num_nodes: 1
++  # Single GPU to avoid repeated NCCL timeouts seen with 0,3.
+   component_placement:
+-    actor,env,rollout: all
++    actor,env,rollout: 0
+ 
+ runner:
+   task_type: sft
+@@ -27,30 +28,39 @@ runner:
+     logger_backends: ["tensorboard"]
+ 
+   max_epochs: 30000
+-  max_steps: -1
+-  val_check_interval: 500
+-  save_interval: 3000
++  # Stop at a usable checkpoint for Step 3.
++  max_steps: 3000
++  # Disabled: full eval on this dataset stalled NCCL for 3h and killed the run.
++  val_check_interval: -1
++  # ~45-60s/step; 120 steps is about 1.5-2h, safely under 3h.
++  save_interval: 120
++  resume_dir: /root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260921-10:01:14/value_sft/checkpoints/global_step_2520
+ 
+ data:
+   # Must match Step 1's data.tag; loads meta/returns_{tag}.parquet (null = legacy meta/returns.parquet)
+-  tag: null
++  tag: "fail300"
+ 
+   train_data_paths:
+-    - dataset_path: "/path/to/sft_dataset"
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft"
+       type: "sft"
+       weight: 1.0
+       robot_type: "libero"
+       model_type: "pi05"
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train"
++      type: "rollout"
++      weight: 1.0
++      robot_type: "libero"
++      model_type: "pi05"
+ 
+   eval_data_paths:
+-    - dataset_path: "/path/to/eval_dataset"
++    - dataset_path: "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval"
+       max_samples: 10000
+       robot_type: "libero"
+       model_type: "pi05"
+ 
+-  train_num_workers: 8
+-  eval_num_workers: 4
+-  prefetch_factor: 4
++  train_num_workers: 0
++  eval_num_workers: 0
++  prefetch_factor: 2
+   persistent_workers: false
+   pin_memory: false
+   include_state: true
+@@ -70,15 +80,15 @@ algorithm:
+ actor:
+   group_name: "ActorGroup"
+   training_backend: "fsdp"
+-  micro_batch_size: 32
+-  global_batch_size: 256
++  micro_batch_size: 8
++  global_batch_size: 128
+   seed: 0
+ 
+   model:
+     precision: bf16
+-    siglip_path: "/path/to/siglip"
+-    gemma3_path: "/path/to/gemma3"
+-    tokenizer_path: "/path/to/gemma3"
++    siglip_path: "/root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224"
++    gemma3_path: "/root/rlinf_recap/checkpoints/gemma-3-270m"
++    tokenizer_path: "/root/rlinf_recap/checkpoints/gemma-3-270m"
+     freeze_vlm: false
+     action_dim: 7
+     action_horizon: 10

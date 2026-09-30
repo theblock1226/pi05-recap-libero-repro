@@ -1,0 +1,61 @@
+{
+  "note": "vanilla pi05 forward; CFG guidance_scale NOT applied",
+  "task0_x10": {
+    "6000": {
+      "success_rate": 0.4,
+      "successes": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "elapsed_sec": 1147.4023187160492
+    },
+    "9000": {
+      "success_rate": 0.3,
+      "successes": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    }
+  },
+  "9000_smoke_task0_x3": {
+    "success_rate": 0.3333333333333333,
+    "successes": [
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "9000_libero10_x10": {
+    "overall_success_rate": 0.03,
+    "total_episodes": 100,
+    "elapsed_sec": 12326.39726471901,
+    "per_task_rates": {
+      "T0": 0.3,
+      "T1": 0.0,
+      "T2": 0.0,
+      "T3": 0.0,
+      "T4": 0.0,
+      "T5": 0.0,
+      "T6": 0.0,
+      "T7": 0.0,
+      "T8": 0.0,
+      "T9": 0.0
+    }
+  }
+}

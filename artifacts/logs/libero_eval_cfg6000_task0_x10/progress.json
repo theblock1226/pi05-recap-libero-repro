@@ -1,0 +1,21 @@
+{
+  "checkpoint": "/root/rlinf_recap/deploy/cfg_rl_step6000",
+  "task_suite": "libero_10",
+  "task_id": 0,
+  "task": "put both the alphabet soup and the tomato sauce in the basket",
+  "num_trials": 10,
+  "completed_episodes": 10,
+  "successes": [
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "running_success_rate": 0.4
+}

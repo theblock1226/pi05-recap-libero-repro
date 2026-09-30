@@ -1,0 +1,55 @@
+{
+  "note": "Metrics taken from Value SFT training log at the exact global_step of each checkpoint. Val was disabled; no online Libero rollout. GPU busy with CFG so no per-ckpt V-inference plots.",
+  "checkpoints": [
+    {
+      "step": 2520,
+      "loss": 2.79,
+      "mae": 0.107,
+      "spearman": 0.647,
+      "pred": -0.556,
+      "tgt": -0.586,
+      "cat_best": 0.242,
+      "cat_n": 0.352
+    },
+    {
+      "step": 2640,
+      "loss": 2.91,
+      "mae": 0.104,
+      "spearman": 0.743,
+      "pred": -0.521,
+      "tgt": -0.546,
+      "cat_best": 0.211,
+      "cat_n": 0.359
+    },
+    {
+      "step": 2760,
+      "loss": 2.94,
+      "mae": 0.104,
+      "spearman": 0.685,
+      "pred": -0.537,
+      "tgt": -0.535,
+      "cat_best": 0.227,
+      "cat_n": 0.375
+    },
+    {
+      "step": 2880,
+      "loss": 2.83,
+      "mae": 0.0903,
+      "spearman": 0.738,
+      "pred": -0.55,
+      "tgt": -0.52,
+      "cat_best": 0.18,
+      "cat_n": 0.289
+    },
+    {
+      "step": 3000,
+      "loss": 2.75,
+      "mae": 0.0957,
+      "spearman": 0.76,
+      "pred": -0.503,
+      "tgt": -0.507,
+      "cat_best": 0.203,
+      "cat_n": 0.375
+    }
+  ]
+}

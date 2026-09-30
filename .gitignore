@@ -1,0 +1,12 @@
+# never commit weights
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.ckpt
+*.distcp
+*.gguf
+.venv/
+__pycache__/
+ray_tmp/
+.DS_Store

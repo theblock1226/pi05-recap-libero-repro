@@ -1,0 +1,25 @@
+{
+  "ckpt": 6000,
+  "at_ckpt": {
+    "step": 6000,
+    "loss": 0.0117,
+    "lr": 9.96e-06,
+    "grad_norm": 0.103,
+    "cond": 0.273,
+    "uncond": 0.727,
+    "pos": 0.305,
+    "neg": 0.695,
+    "pos_cond": 0.273
+  },
+  "early": {
+    "step": 50,
+    "loss": 0.0731,
+    "lr": 9.8e-08,
+    "grad_norm": 0.659,
+    "cond": 0.25,
+    "uncond": 0.75,
+    "pos": 0.289,
+    "neg": 0.711,
+    "pos_cond": 0.25
+  }
+}

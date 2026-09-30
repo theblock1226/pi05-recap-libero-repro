@@ -1,0 +1,12 @@
+2026-09-30 02:53:12,144 INFO: Loading policy from /root/rlinf_recap/deploy/cfg_rl_step9000
+2026-09-30 02:53:12,144 INFO: Loading model...
+2026-09-30 02:53:59,279 INFO: Norm stats not found in checkpoints/torch/pi0_libero/assets/physical-intelligence/libero, skipping.
+2026-09-30 02:53:59,280 INFO: Loaded norm stats from /root/rlinf_recap/deploy/cfg_rl_step9000/physical-intelligence/libero
+2026-09-30 02:54:02,016 INFO: Policy loaded in 49.9s
+2026-09-30 02:54:02,021 INFO: Task[0]: put both the alphabet soup and the tomato sauce in the basket
+2026-09-30 02:56:14,672 INFO: trial 0 success=False steps=530
+2026-09-30 02:56:15,790 INFO: saved video /root/rlinf_recap/logs/libero_eval_cfg9000_smoke/videos/task0_trial0.mp4 (520 frames)
+2026-09-30 02:58:21,165 INFO: trial 1 success=False steps=530
+2026-09-30 02:58:22,050 INFO: saved video /root/rlinf_recap/logs/libero_eval_cfg9000_smoke/videos/task0_trial1.mp4 (520 frames)
+2026-09-30 02:59:34,220 INFO: trial 2 success=True steps=290
+2026-09-30 02:59:34,812 INFO: DONE success_rate=0.333 summary={'checkpoint': '/root/rlinf_recap/deploy/cfg_rl_step9000', 'task_suite': 'libero_10', 'task_id': 0, 'task': 'put both the alphabet soup and the tomato sauce in the basket', 'num_trials': 3, 'successes': [0.0, 0.0, 1.0], 'success_rate': 0.3333333333333333, 'note': 'vanilla pi05 forward; CFG guidance_scale not applied in this smoke loader', 'render': 'osmesa'}

@@ -1,0 +1,453 @@
+python /root/rlinf_recap/RLinf/examples/offline_rl/advantage_labeling/recap/train_value.py --config-path /root/rlinf_recap/RLinf/examples/offline_rl/config --config-name recap_value_model_sft runner.logger.log_path=/root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260920-07:33:49 
+INFO:datasets:PyTorch version 2.11.0+cu129 available.
+INFO:datasets:Polars version 1.44.2 available.
+INFO:datasets:JAX version 0.5.3 available.
+/root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+/root/rlinf_recap/RLinf/examples/offline_rl/advantage_labeling/recap/train_value.py:39: Hydra14MigrationWarning: 
+version_base="1.1" selects Hydra 1.1 compatibility behavior.
+Hydra 1.4 will remove this compatibility behavior.
+Before upgrading to Hydra 1.4, set version_base="1.3" and test your application.
+See https://hydra.cc/docs/upgrades/1.3_to_1.4/prepare_for_1_4/ for preparation instructions.
+  @hydra.main(version_base="1.1", config_path=None, config_name="recap_value_model_sft")
+/root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/hydra/_internal/hydra.py:119: UserWarning: Future Hydra versions will no longer change working directory at job runtime by default.
+See https://hydra.cc/docs/1.2/upgrades/1.1_to_1.2/changes_to_job_working_dir/ for more information.
+  ret = run_job(
+2026-09-20 07:34:00,973	INFO worker.py:2015 -- Started a local Ray instance. View the dashboard at [1m[32mhttp://127.0.0.1:8265 [39m[22m
+[INFO 07:34:03 RLinf] RLinf is running on a cluster with 1 node and 4 accelerators. The nodes' details are: 
+node_labels: []
+node_rank: 0
+ray_id: 298c26f850d9bc1883ed6add538c15f4a6e2dfb4c4f1c2bd1949671c
+node_ip: 172.17.0.7
+num_cpus: 48
+python_interpreter_path: /root/rlinf_recap/RLinf/.venv/bin/python
+hardware_resources:
+- type: Accelerator
+  infos:
+  - type: Accelerator
+    model: NV_GPU:RTX A6000
+  - type: Accelerator
+    model: NV_GPU:RTX A6000
+  - type: Accelerator
+    model: NV_GPU:RTX A6000
+  - type: Accelerator
+    model: NV_GPU:RTX A6000
+profiler_backends:
+- nsight
+
+Node groups' details are: 
+label: cluster
+nodes: '0'
+hardware_type: Accelerator
+ignore_hardware: false
+env_configs: null
+
+label: node
+nodes: '0'
+hardware_type: null
+ignore_hardware: true
+env_configs: null
+
+[INFO 07:34:03 FlexiblePlacementStrategy] 
+[INFO 07:34:03 FlexiblePlacementStrategy] Using flexible placement with hardware ranks: [[0], [3]], node groups: ['cluster'].
+[INFO 07:34:03 FlexiblePlacementStrategy] 
+[INFO 07:34:03 FlexiblePlacementStrategy] Using flexible placement with hardware ranks: [[0], [3]], node groups: ['cluster'].
+[INFO 07:34:03 FlexiblePlacementStrategy] Generated 2 placements: [Placement(rank=0, cluster_node_rank=0, placement_node_rank=0, local_accelerator_rank=0, accelerator_type='NV_GPU', local_rank=0, local_world_size=2, visible_accelerators=['0'], isolate_accelerator=True, local_hardware_ranks=[0], node_group_label='cluster'), Placement(rank=1, cluster_node_rank=0, placement_node_rank=0, local_accelerator_rank=3, accelerator_type='NV_GPU', local_rank=1, local_world_size=2, visible_accelerators=['3'], isolate_accelerator=True, local_hardware_ranks=[3], node_group_label='cluster')].
+[36m(pid=1798618)[0m /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(pid=1798618)[0m   warnings.warn(
+[36m(pid=1798621)[0m /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(pid=1798621)[0m   warnings.warn(
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.utils:Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft/meta/returns_fail300.parquet (30 episodes)
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.value_dataset:ReturnNormalizer: return_min=-779.0000, return_max=0.0000, range=(-1, 0)
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.value_dataset:ValueDataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft, 8005 samples
+[36m(FSDPValueSftWorker pid=1798618)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798618)[0m The dataset you requested (libero10_task0_train) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798618)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798618)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_train
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798618)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798618)[0m The dataset you requested (libero10_task0_train) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798618)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798618)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_train
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798618)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.utils:Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft/meta/returns_fail300.parquet (30 episodes)
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.value_dataset:ReturnNormalizer: return_min=-779.0000, return_max=0.0000, range=(-1, 0)
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.value_dataset:ValueDataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft, 8005 samples
+[36m(FSDPValueSftWorker pid=1798621)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798621)[0m The dataset you requested (libero10_task0_train) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798621)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798621)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_train
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798621)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798621)[0m The dataset you requested (libero10_task0_train) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798621)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798621)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_train
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798621)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.utils:Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train/meta/returns_fail300.parquet (4096 episodes)
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.value_dataset:ReturnNormalizer: return_min=-779.0000, return_max=0.0000, range=(-1, 0)
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.value_dataset:ValueDataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train, 1561874 samples
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:ValueMixtureDataset initialized:
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:  Datasets: 2
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:  Total samples: 1569879
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:  Dataset lengths: [8005, 1561874]
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:  Raw weights: [1.0, 1.0]
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:  Sampling weights: [0.0050991191528737545, 0.9949008822441101]
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.common:  Mode: train
+[36m(FSDPValueSftWorker pid=1798621)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798621)[0m The dataset you requested (libero10_task0_eval) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798621)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798621)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_eval
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798621)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798621)[0m The dataset you requested (libero10_task0_eval) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798621)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798621)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_eval
+[36m(FSDPValueSftWorker pid=1798621)[0m ```
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798621)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798621)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798621)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.utils:Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train/meta/returns_fail300.parquet (4096 episodes)
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.value_dataset:ReturnNormalizer: return_min=-779.0000, return_max=0.0000, range=(-1, 0)
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.value_dataset:ValueDataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train, 1561874 samples
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:ValueMixtureDataset initialized:
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:  Datasets: 2
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:  Total samples: 1569879
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:  Dataset lengths: [8005, 1561874]
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:  Raw weights: [1.0, 1.0]
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:  Sampling weights: [0.0050991191528737545, 0.9949008822441101]
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.common:  Mode: train
+[36m(FSDPValueSftWorker pid=1798618)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798618)[0m The dataset you requested (libero10_task0_eval) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798618)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798618)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_eval
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798618)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m WARNING:root:
+[36m(FSDPValueSftWorker pid=1798618)[0m The dataset you requested (libero10_task0_eval) is in 2.0 format.
+[36m(FSDPValueSftWorker pid=1798618)[0m While current version of LeRobot is backward-compatible with it, the version of your dataset still uses global
+[36m(FSDPValueSftWorker pid=1798618)[0m stats instead of per-episode stats. Update your dataset stats to the new format using this command:
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m python -m lerobot.datasets.v21.convert_dataset_v20_to_v21 --repo-id=libero10_task0_eval
+[36m(FSDPValueSftWorker pid=1798618)[0m ```
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m If you encounter a problem, contact LeRobot maintainers on [Discord](https://discord.com/invite/s3KuuzsPFb)
+[36m(FSDPValueSftWorker pid=1798618)[0m or open an [issue on GitHub](https://github.com/huggingface/lerobot/issues/new/choose).
+[36m(FSDPValueSftWorker pid=1798618)[0m 
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.utils:Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval/meta/returns_fail300.parquet (64 episodes)
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.value_dataset:ReturnNormalizer: return_min=-779.0000, return_max=0.0000, range=(-1, 0)
+[36m(FSDPValueSftWorker pid=1798618)[0m INFO:rlinf.data.datasets.recap.value_dataset:ValueDataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval, 10000 samples
+{
+  "actor": {
+    "model": {
+      "model_type": "recap_value_model",
+      "precision": "bf16",
+      "is_lora": false,
+      "siglip_path": "/root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224",
+      "gemma3_path": "/root/rlinf_recap/checkpoints/gemma-3-270m",
+      "tokenizer_path": "/root/rlinf_recap/checkpoints/gemma-3-270m",
+      "critic_expert_variant": "gemma_1m",
+      "num_bins": 201,
+      "v_min": -1.0,
+      "v_max": 0.0,
+      "value_dropout": 0.0,
+      "action_dim": 7,
+      "action_horizon": 10,
+      "max_token_len": 200,
+      "action_expert_variant": "gemma_300m",
+      "freeze_vision_encoder": false,
+      "train_expert_only": false,
+      "forward_mode": "vla",
+      "max_language_len": 50,
+      "stop_gradient_to_vlm": false,
+      "freeze_vlm": false
+    },
+    "fsdp_config": {
+      "strategy": "fsdp",
+      "sharding_strategy": "no_shard",
+      "gradient_checkpointing": false,
+      "cpu_offload": false,
+      "offload_pin_memory": false,
+      "reshard_after_forward": true,
+      "enable_gradient_accumulation": true,
+      "forward_prefetch": false,
+      "limit_all_gathers": false,
+      "backward_prefetch": null,
+      "use_orig_params": false,
+      "use_liger_kernel": false,
+      "mixed_precision": {
+        "param_dtype": "bf16",
+        "reduce_dtype": "bf16",
+        "buffer_dtype": "bf16"
+      },
+      "amp_autocast": {
+        "enabled": false,
+        "precision": "bf16"
+      },
+      "grad_scaler": {
+        "enabled": false,
+        "init_scale": null,
+        "growth_interval": null
+      }
+    },
+    "group_name": "ActorGroup",
+    "training_backend": "fsdp",
+    "micro_batch_size": 8,
+    "global_batch_size": 128,
+    "seed": 0,
+    "optim": {
+      "lr": 5e-05,
+      "value_lr": 0.0001,
+      "adam_beta1": 0.9,
+      "adam_beta2": 0.95,
+      "adam_eps": 1e-08,
+      "weight_decay": 1e-10,
+      "clip_grad": 1.0,
+      "lr_scheduler": "constant",
+      "lr_warmup_steps": 500,
+      "total_training_steps": 8000
+    }
+  },
+  "cluster": {
+    "num_nodes": 1,
+    "component_placement": {
+      "actor,env,rollout": "0,3"
+    },
+    "tracer": {
+      "enable": false
+    }
+  },
+  "runner": {
+    "task_type": "sft",
+    "logger": {
+      "log_path": "/root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260920-07:33:49",
+      "project_name": "rlinf",
+      "experiment_name": "value_sft",
+      "logger_backends": [
+        "tensorboard"
+      ]
+    },
+    "max_epochs": 30000,
+    "max_steps": -1,
+    "val_check_interval": 500,
+    "save_interval": 3000,
+    "per_worker_log": false,
+    "per_worker_log_path": null
+  },
+  "data": {
+    "tag": "fail300",
+    "train_data_paths": [
+      {
+        "dataset_path": "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft",
+        "type": "sft",
+        "weight": 1.0,
+        "robot_type": "libero",
+        "model_type": "pi05"
+      },
+      {
+        "dataset_path": "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train",
+        "type": "rollout",
+        "weight": 1.0,
+        "robot_type": "libero",
+        "model_type": "pi05"
+      }
+    ],
+    "eval_data_paths": [
+      {
+        "dataset_path": "/root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval",
+        "max_samples": 10000,
+        "robot_type": "libero",
+        "model_type": "pi05"
+      }
+    ],
+    "train_num_workers": 4,
+    "eval_num_workers": 2,
+    "prefetch_factor": 2,
+    "persistent_workers": false,
+    "pin_memory": false,
+    "include_state": true,
+    "gamma": 1.0,
+    "action_horizon": 10,
+    "normalize_to_minus_one_zero": true,
+    "include_next_obs": false,
+    "action_dim": 7,
+    "robot_type": "libero",
+    "model_type": "pi05",
+    "balance_weights": true,
+    "seed": 42
+  },
+  "algorithm": {
+    "adv_type": "gae"
+  },
+  "reward": {
+    "use_reward_model": false
+  },
+  "critic": {
+    "use_critic_model": false
+  }
+}
+[36m(FSDPValueSftWorker pid=1798618)[0m [WARNING 07:34:12 ActorGroup-Rank-0][fsdp_model_manager.py:79] Provided there is sufficient GPU memory, set the actor.model.precision parameter to fp32 to allow the optimizer to run in fp32 for better convergence. Meanwhile, setting mixed_precision.param_dtype to 16-bit dtype can help maximize speed, as it will automatically convert fp32 to fp16 during operator execution.
+[36m(FSDPValueSftWorker pid=1798621)[0m [WARNING 07:34:12 ActorGroup-Rank-1][fsdp_model_manager.py:79] Provided there is sufficient GPU memory, set the actor.model.precision parameter to fp32 to allow the optimizer to run in fp32 for better convergence. Meanwhile, setting mixed_precision.param_dtype to 16-bit dtype can help maximize speed, as it will automatically convert fp32 to fp16 during operator execution.
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:12 ActorGroup-Rank-0][fsdp_model_manager.py:133] [FSDP] AMP is disabled.
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:12 ActorGroup-Rank-1][fsdp_model_manager.py:133] [FSDP] AMP is disabled.
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:14 ActorGroup-Rank-0][fsdp_value_sft_worker.py:267] [ValueSFT] Computed global return range from stats.json: [-779.0, 0.0]
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:14 ActorGroup-Rank-1][fsdp_value_sft_worker.py:267] [ValueSFT] Computed global return range from stats.json: [-779.0, 0.0]
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:15 ActorGroup-Rank-0][fsdp_value_sft_worker.py:338] [ValueSFT] Loaded: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft  (type=sft, 8005 samples, weight=1.0)
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:15 ActorGroup-Rank-1][fsdp_value_sft_worker.py:338] [ValueSFT] Loaded: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft  (type=sft, 8005 samples, weight=1.0)
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:46 ActorGroup-Rank-1][fsdp_value_sft_worker.py:338] [ValueSFT] Loaded: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train  (type=rollout, 1561874 samples, weight=1.0)
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:46 ActorGroup-Rank-1][fsdp_value_sft_worker.py:351] [ValueSFT] Total samples: 1569878
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:46 ActorGroup-Rank-1][fsdp_value_sft_worker.py:373] [ValueSFT] Train DataLoader workers: num_workers=4, prefetch_factor=2, persistent_workers=False, pin_memory=False
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:46 ActorGroup-Rank-0][fsdp_value_sft_worker.py:338] [ValueSFT] Loaded: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train  (type=rollout, 1561874 samples, weight=1.0)
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:46 ActorGroup-Rank-0][fsdp_value_sft_worker.py:351] [ValueSFT] Total samples: 1569878
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:46 ActorGroup-Rank-0][fsdp_value_sft_worker.py:373] [ValueSFT] Train DataLoader workers: num_workers=4, prefetch_factor=2, persistent_workers=False, pin_memory=False
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:48 ActorGroup-Rank-0][fsdp_value_sft_worker.py:447] [ValueSFT] Eval dataset 'libero10_task0_eval' loaded: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval (10000 samples, max_samples=10000, norm_range=train_global:[-779.0, 0.0])
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:48 ActorGroup-Rank-0][fsdp_value_sft_worker.py:455] [ValueSFT] 1 eval dataset(s) registered: ['libero10_task0_eval']
+[36m(FSDPValueSftWorker pid=1798618)[0m [INFO 07:34:48 ActorGroup-Rank-0][fsdp_value_sft_worker.py:459] [ValueSFT] Eval DataLoader workers: num_workers=2, prefetch_factor=2, persistent_workers=False, pin_memory=False
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:48 ActorGroup-Rank-1][fsdp_value_sft_worker.py:447] [ValueSFT] Eval dataset 'libero10_task0_eval' loaded: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval (10000 samples, max_samples=10000, norm_range=train_global:[-779.0, 0.0])
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:48 ActorGroup-Rank-1][fsdp_value_sft_worker.py:455] [ValueSFT] 1 eval dataset(s) registered: ['libero10_task0_eval'][36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.utils:Loaded returns sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval/meta/returns_fail300.parquet (64 episodes)
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.value_dataset:ReturnNormalizer: return_min=-779.0000, return_max=0.0000, range=(-1, 0)
+[36m(FSDPValueSftWorker pid=1798621)[0m INFO:rlinf.data.datasets.recap.value_dataset:ValueDataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_eval, 10000 samples
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Creating ValueCriticModel: expert=gemma_1m
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:Creating ValueExpert: experts=['value'], freeze_vision_encoder=False, freeze_vlm=False
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Loading SigLIP2 from /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Creating ValueCriticModel: expert=gemma_1m
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:Creating ValueExpert: experts=['value'], freeze_vision_encoder=False, freeze_vlm=False
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Loading SigLIP2 from /root/rlinf_recap/checkpoints/siglip2-so400m-patch14-224
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Loading Gemma3 from /root/rlinf_recap/checkpoints/gemma-3-270m
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Loading Gemma3 from /root/rlinf_recap/checkpoints/gemma-3-270m
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Fresh projection: 1152 → 640 (randomly initialized)
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Fresh projection: 1152 → 640 (randomly initialized)
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Expert 'value': width=128, depth=4, head_dim=256
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:  Expert 'value': width=128, depth=4, head_dim=256
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:Applying mixed precision: bf16 backbone + fp32 for selected layers
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap:Created ValueCriticModel (V function)
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap:No model_path provided; using from_pretrained() weights.
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.value_expert:Applying mixed precision: bf16 backbone + fp32 for selected layers
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap:Created ValueCriticModel (V function)
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap:No model_path provided; using from_pretrained() weights.
+[36m(ActorGroup(rank=0) pid=1798618)[0m /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/torch/distributed/fsdp/wrap.py:485: FutureWarning: The `NO_SHARD` sharding strategy is deprecated. If having issues, please use `DistributedDataParallel` instead.
+[36m(ActorGroup(rank=0) pid=1798618)[0m   return wrapper_cls(module, **kwargs)
+[36m(ActorGroup(rank=1) pid=1798621)[0m /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/torch/distributed/fsdp/wrap.py:485: FutureWarning: The `NO_SHARD` sharding strategy is deprecated. If having issues, please use `DistributedDataParallel` instead.
+[36m(ActorGroup(rank=1) pid=1798621)[0m   return wrapper_cls(module, **kwargs)
+[36m(ActorGroup(rank=0) pid=1798618)[0m /root/rlinf_recap/RLinf/rlinf/hybrid_engines/fsdp/strategy/fsdp.py:173: FutureWarning: The `NO_SHARD` sharding strategy is deprecated. If having issues, please use `DistributedDataParallel` instead.
+[36m(ActorGroup(rank=0) pid=1798618)[0m   fsdp_model = FSDP(
+[36m(ActorGroup(rank=1) pid=1798621)[0m /root/rlinf_recap/RLinf/rlinf/hybrid_engines/fsdp/strategy/fsdp.py:173: FutureWarning: The `NO_SHARD` sharding strategy is deprecated. If having issues, please use `DistributedDataParallel` instead.
+[36m(ActorGroup(rank=1) pid=1798621)[0m   fsdp_model = FSDP(
+
+[36m(FSDPValueSftWorker pid=1798621)[0m [INFO 07:34:48 ActorGroup-Rank-1][fsdp_value_sft_worker.py:459] [ValueSFT] Eval DataLoader workers: num_workers=2, prefetch_factor=2, persistent_workers=False, pin_memory=False
+[36m(ActorGroup(rank=0) pid=1798618)[0m [INFO 07:34:51 ActorGroup-Rank-0][fsdp_model_manager.py:303] [FSDP] Gradient checkpointing is disabled
+[36m(ActorGroup(rank=1) pid=1798621)[0m [INFO 07:34:51 ActorGroup-Rank-1][fsdp_model_manager.py:303] [FSDP] Gradient checkpointing is disabled
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | 0/367920000 [00:00<?, ?it/s][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.value_common.image_text_processing:[Tokenization Example #1] prompt='put both the alphabet soup and the tomato sauce in the basket' → '<bos>Task: put both the alphabet soup and the tomato sauce in the basket.<pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad>'  (raw_len=16, pad_to=200)
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.value_common.image_text_processing:[Tokenization Example #2] prompt='put both the alphabet soup and the tomato sauce in the basket' → '<bos>Task: put both the alphabet soup and the tomato sauce in the basket.<pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad>'  (raw_len=16, pad_to=200)
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:[Collator Verification] First batch prompts:
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [0] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [1] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [2] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.data_collator:  [3] prompt: put both the alphabet soup and the tomato sauce in the basket
+[36m(ActorGroup(rank=0) pid=1798618)[0m /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+[36m(ActorGroup(rank=0) pid=1798618)[0m   return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[36m(ActorGroup(rank=1) pid=1798621)[0m /root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+[36m(ActorGroup(rank=1) pid=1798621)[0m   return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                          | 1/367920000 [00:10<1077345:03:31, 10.54s/it, time/step=10.5, time/training=10.5, train/cat_acc_best=0, train/cat_acc_neighbor=0, train/grad_norm=29.7, train/loss=5.83, train/lr=0, train/mae=0.32, train/predicted_value_mean=-0.52, train/predicted_value_std=0.00672, train/target_value_mean=-0.559, train/target_value_std=0.275, train/value_spearman=0.275][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                 | 2/367920000 [00:15<771385:29:00,  7.55s/it, time/step=5.45, time/training=5.44, train/cat_acc_best=0, train/cat_acc_neighbor=0.0156, train/grad_norm=31.7, train/loss=5.88, train/lr=1e-7, train/mae=0.319, train/predicted_value_mean=-0.521, train/predicted_value_std=0.00636, train/target_value_mean=-0.556, train/target_value_std=0.268, train/value_spearman=0.189][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                       | 3/367920000 [00:21<677553:15:32,  6.63s/it, time/step=5.53, time/training=5.53, train/cat_acc_best=0, train/cat_acc_neighbor=0, train/grad_norm=30.6, train/loss=5.93, train/lr=2e-7, train/mae=0.379, train/predicted_value_mean=-0.52, train/predicted_value_std=0.00612, train/target_value_mean=-0.507, train/target_value_std=0.277, train/value_spearman=0.305][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                   | 4/367920000 [00:27<635712:04:03,  6.22s/it, time/step=5.59, time/training=5.58, train/cat_acc_best=0, train/cat_acc_neighbor=0.0156, train/grad_norm=28.1, train/loss=5.9, train/lr=3e-7, train/mae=0.343, train/predicted_value_mean=-0.52, train/predicted_value_std=0.00583, train/target_value_mean=-0.529, train/target_value_std=0.286, train/value_spearman=0.249][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                            | 5/367920000 [00:32<614693:11:18,  6.01s/it, time/step=5.65, time/training=5.64, train/cat_acc_best=0.0156, train/cat_acc_neighbor=0.0156, train/grad_norm=25.6, train/loss=5.81, train/lr=4e-7, train/mae=0.319, train/predicted_value_mean=-0.519, train/predicted_value_std=0.00718, train/target_value_mean=-0.543, train/target_value_std=0.262, train/value_spearman=0.345][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                 | 6/367920000 [00:39<626041:56:37,  6.13s/it, time/step=6.34, time/training=6.32, train/cat_acc_best=0, train/cat_acc_neighbor=0.00781, train/grad_norm=30.7, train/loss=5.84, train/lr=5e-7, train/mae=0.374, train/predicted_value_mean=-0.518, train/predicted_value_std=0.00619, train/target_value_mean=-0.48, train/target_value_std=0.294, train/value_spearman=0.183][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                      | 7/367920000 [00:44<610162:33:39,  5.97s/it, time/step=5.65, time/training=5.64, train/cat_acc_best=0, train/cat_acc_neighbor=0, train/grad_norm=26.9, train/loss=5.85, train/lr=6e-7, train/mae=0.354, train/predicted_value_mean=-0.518, train/predicted_value_std=0.00602, train/target_value_mean=-0.519, train/target_value_std=0.277, train/value_spearman=0.207][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                   | 8/367920000 [00:50<616150:48:26,  6.03s/it, time/step=6.15, time/training=6.15, train/cat_acc_best=0, train/cat_acc_neighbor=0.0156, train/grad_norm=28.6, train/loss=5.9, train/lr=7e-7, train/mae=0.343, train/predicted_value_mean=-0.521, train/predicted_value_std=0.0063, train/target_value_mean=-0.523, train/target_value_std=0.293, train/value_spearman=0.256][36m(ActorGroup(rank=0) pid=1798618)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+[36m(ActorGroup(rank=1) pid=1798621)[0m INFO:rlinf.models.embodiment.value_model.recap.modeling_critic:Disabled gradient checkpointing for ValueCriticModel
+*** SIGTERM received at time=1789890294 on cpu 35 ***
+PC: @     0x7f05b59ffd71  (unknown)  (unknown)
+    @     0x7f05b59ac330  (unknown)  (unknown)
+    @     0x7f05b5a0bfb8         96  (unknown)
+    @     0x55b64499ee92  (unknown)  PyThread_acquire_lock_timed
+    @     0x7ef400000000  (unknown)  (unknown)
+[2026-09-20 07:44:54,900 E 1795026 1795026] logging.cc:474: *** SIGTERM received at time=1789890294 on cpu 35 ***
+[2026-09-20 07:44:54,906 E 1795026 1795026] logging.cc:474: PC: @     0x7f05b59ffd71  (unknown)  (unknown)
+[2026-09-20 07:44:54,906 E 1795026 1795026] logging.cc:474:     @     0x7f05b59ac330  (unknown)  (unknown)
+[2026-09-20 07:44:54,906 E 1795026 1795026] logging.cc:474:     @     0x7f05b5a0bfb8         96  (unknown)
+[2026-09-20 07:44:54,906 E 1795026 1795026] logging.cc:474:     @     0x55b64499ee92  (unknown)  PyThread_acquire_lock_timed
+[2026-09-20 07:44:54,912 E 1795026 1795026] logging.cc:474:     @     0x7ef400000000  (unknown)  (unknown)
+Global Step:   0%|                                                                                                                                                                                                                                                                                                                                                                                                                                  | 8/367920000 [10:02<7700333:25:59, 75.35s/it, time/step=6.15, time/training=6.15, train/cat_acc_best=0, train/cat_acc_neighbor=0.0156, train/grad_norm=28.6, train/loss=5.9, train/lr=7e-7, train/mae=0.343, train/predicted_value_mean=-0.521, train/predicted_value_std=0.0063, train/target_value_mean=-0.523, train/target_value_std=0.293, train/value_spearman=0.256]

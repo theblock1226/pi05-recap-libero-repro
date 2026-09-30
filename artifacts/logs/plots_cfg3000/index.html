@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CFG ckpt 3000 评测图</title>
+<style>
+body{font-family:ui-sans-serif,system-ui,sans-serif;margin:24px;max-width:980px;background:#0f1115;color:#e8eaed}
+h1{font-size:1.35rem} h2{font-size:1.05rem;margin-top:1.6rem}
+p{color:#9aa0a6;line-height:1.5} img{width:100%;border:1px solid #2a2f3a;border-radius:6px;background:#fff}
+code{background:#1a1f2a;padding:2px 6px;border-radius:4px}
+</style></head><body>
+<h1>CFG-RL <code>global_step_3000</code> 相关评测图</h1>
+<p>来源：训练日志 steps 1–3000 + Step3 advantages（tag <code>fail300_N10_ckpt3000_q30</code>）。
+当前 4 卡正被 Step4 占用，未做 Libero 在线成功率 rollout（会与训练抢 GPU）。</p>
+<p>ckpt 3000 时：loss=0.0126, lr=6e-06, grad_norm=0.124, cond=0.281, pos_label=0.312</p>
+<h2>1. Training loss</h2><img src="01_cfg_loss_to_3000.png"/>
+<h2>2. Learning rate & grad norm</h2><img src="02_cfg_lr_grad_to_3000.png"/>
+<h2>3. CFG condition / label ratios</h2><img src="03_cfg_ratios_to_3000.png"/>
+<h2>4. Early vs step 3000 snapshot</h2><img src="04_cfg_snapshot_3000.png"/>
+<h2>5. Advantage 分布（本 CFG 所用标签）</h2><img src="05_advantage_dist_for_cfg.png"/>
+</body></html>

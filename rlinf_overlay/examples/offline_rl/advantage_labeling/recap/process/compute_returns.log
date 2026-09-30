@@ -1,0 +1,69 @@
+[2026-09-20 07:18:41,710][__main__][INFO] - Starting return computation...
+[2026-09-20 07:18:41,711][__main__][INFO] - Config:
+data:
+  data_root: null
+  train_data_paths:
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+    type: sft
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+    type: rollout
+  dataset_type: sft
+  gamma: 1.0
+  failure_reward: -300.0
+  tag: fail300
+  num_workers: 48
+
+[2026-09-20 07:18:41,711][__main__][INFO] - Processing 2 dataset(s)...
+[2026-09-20 07:18:41,711][__main__][INFO] - 
+============================================================
+[2026-09-20 07:18:41,711][__main__][INFO] - Dataset 1/2
+[2026-09-20 07:18:41,711][__main__][INFO] - ============================================================
+[2026-09-20 07:18:41,711][__main__][INFO] - Processing dataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+[2026-09-20 07:18:41,711][__main__][INFO] -   Type: sft, Gamma: 1.0, Failure reward: -300.0
+[2026-09-20 07:18:41,712][__main__][INFO] - Found 30 parquet files
+[2026-09-20 07:18:41,712][__main__][INFO] - Using 30 parallel threads
+[2026-09-20 07:18:43,033][__main__][INFO] - Wrote sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft/meta/returns_fail300.parquet (8005 rows, 0.0 MB)
+[2026-09-20 07:18:43,035][__main__][INFO] - 
+Statistics:
+[2026-09-20 07:18:43,035][__main__][INFO] -   Return: mean=-141.0816, std=92.4305, min=-457.0000, max=0.0000
+[2026-09-20 07:18:43,035][__main__][INFO] -   Reward: mean=-0.9963, std=0.0611, min=-1.0000, max=0.0000
+[2026-09-20 07:18:43,035][__main__][INFO] -   Total rows: 8005
+[2026-09-20 07:18:43,036][__main__][INFO] - Updated stats.json
+[2026-09-20 07:18:43,038][__main__][INFO] - Updated info.json with new features
+[2026-09-20 07:18:43,039][__main__][INFO] - 
+============================================================
+[2026-09-20 07:18:43,039][__main__][INFO] - Dataset 2/2
+[2026-09-20 07:18:43,039][__main__][INFO] - ============================================================
+[2026-09-20 07:18:43,039][__main__][INFO] - Processing dataset: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+[2026-09-20 07:18:43,039][__main__][INFO] -   Type: rollout, Gamma: 1.0, Failure reward: -300.0
+[2026-09-20 07:18:43,118][__main__][INFO] - Found 4096 parquet files
+[2026-09-20 07:18:43,119][__main__][INFO] - Using 48 parallel threads
+[2026-09-20 07:19:02,397][__main__][INFO] - Wrote sidecar: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train/meta/returns_fail300.parquet (1561874 rows, 1.1 MB)
+[2026-09-20 07:19:03,221][__main__][INFO] - 
+Statistics:
+[2026-09-20 07:19:03,221][__main__][INFO] -   Return: mean=-397.7789, std=226.6333, min=-779.0000, max=0.0000
+[2026-09-20 07:19:03,221][__main__][INFO] -   Reward: mean=-1.4002, std=10.9486, min=-300.0000, max=0.0000
+[2026-09-20 07:19:03,221][__main__][INFO] -   Total rows: 1561874
+[2026-09-20 07:19:03,223][__main__][INFO] - Updated stats.json
+[2026-09-20 07:19:03,224][__main__][INFO] - Updated info.json with new features
+[2026-09-20 07:19:03,380][__main__][INFO] - 
+============================================================
+[2026-09-20 07:19:03,381][__main__][INFO] - Return computation complete!
+[2026-09-20 07:19:03,381][__main__][INFO] - ============================================================
+[2026-09-20 07:19:03,381][__main__][INFO] - Processed 2 dataset(s):
+[2026-09-20 07:19:03,381][__main__][INFO] -   /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+[2026-09-20 07:19:03,381][__main__][INFO] -     return: min=-457.00, max=0.00
+[2026-09-20 07:19:03,381][__main__][INFO] -   /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+[2026-09-20 07:19:03,381][__main__][INFO] -     return: min=-779.00, max=0.00
+[2026-09-20 07:24:08,513][__main__][INFO] - Starting return computation...
+[2026-09-20 07:24:08,514][__main__][INFO] - Config:
+data:
+  data_root: null
+  train_data_paths:
+  - type:rollout
+  dataset_type: sft
+  gamma: 1.0
+  failure_reward: -300.0
+  tag: fail300
+  num_workers: 16
+

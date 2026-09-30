@@ -1,0 +1,7 @@
+127.0.0.1 - - [24/Sep/2026 09:11:08] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 09:11:56] "HEAD /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 09:11:56] "HEAD /01_return_to_go_value_targets.png HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 09:27:55] "GET /01_return_to_go_value_targets.png HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 09:27:55] code 404, message File not found
+127.0.0.1 - - [24/Sep/2026 09:27:55] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [24/Sep/2026 09:28:05] "GET /02_value_sft_loss_mae.png HTTP/1.1" 200 -

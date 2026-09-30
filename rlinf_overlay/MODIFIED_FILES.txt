@@ -1,0 +1,8 @@
+ M examples/offline_rl/advantage_labeling/recap/process/compute_advantages.py
+ M examples/offline_rl/config/cfg_rl_openpi.yaml
+ M examples/offline_rl/config/model/pi0_5.yaml
+ M examples/offline_rl/config/model/recap_value_model.yaml
+ M examples/offline_rl/config/model/steam_value_model.yaml
+ M examples/offline_rl/config/recap_compute_advantages.yaml
+ M examples/offline_rl/config/recap_compute_returns.yaml
+ M examples/offline_rl/config/recap_value_model_sft.yaml

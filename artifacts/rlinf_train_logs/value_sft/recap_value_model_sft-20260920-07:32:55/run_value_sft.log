@@ -1,0 +1,17 @@
+python /root/rlinf_recap/RLinf/examples/offline_rl/advantage_labeling/recap/train_value.py --config-path /root/rlinf_recap/RLinf/examples/offline_rl/config --config-name recap_value_model_sft runner.logger.log_path=/root/rlinf_recap/RLinf/logs/value_sft/recap_value_model_sft-20260920-07:32:55 cluster.component_placement.actor,env,rollout=0,3 actor.micro_batch_size=8 actor.global_batch_size=128 data.train_num_workers=4 data.eval_num_workers=2
+INFO:datasets:PyTorch version 2.11.0+cu129 available.
+INFO:datasets:Polars version 1.44.2 available.
+INFO:datasets:JAX version 0.5.3 available.
+/root/rlinf_recap/RLinf/.venv/lib/python3.11/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+/root/rlinf_recap/RLinf/examples/offline_rl/advantage_labeling/recap/train_value.py:39: Hydra14MigrationWarning: 
+version_base="1.1" selects Hydra 1.1 compatibility behavior.
+Hydra 1.4 will remove this compatibility behavior.
+Before upgrading to Hydra 1.4, set version_base="1.3" and test your application.
+See https://hydra.cc/docs/upgrades/1.3_to_1.4/prepare_for_1_4/ for preparation instructions.
+  @hydra.main(version_base="1.1", config_path=None, config_name="recap_value_model_sft")
+LexerNoViableAltException: cluster.component_placement.actor,env,rollout=0,3
+                                                            ^
+See https://hydra.cc/docs/1.2/advanced/override_grammar/basic for details
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
