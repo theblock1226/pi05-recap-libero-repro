@@ -1,0 +1,108 @@
+actor:
+  model:
+    model_type: cfg_model
+    model_path: /root/rlinf_recap/checkpoints/pi05_base_pytorch
+    precision: null
+    num_action_chunks: 10
+    action_dim: 7
+    is_lora: false
+    lora_rank: 32
+    use_proprio: true
+    num_steps: 5
+    add_value_head: false
+    openpi:
+      config_name: pi05_libero
+      num_images_in_input: 2
+      noise_level: 0.5
+      action_chunk: 10
+      num_steps: 5
+      train_expert_only: false
+      action_env_dim: 7
+      noise_method: flow_sde
+      add_value_head: false
+      value_after_vlm: false
+      value_vlm_mode: mean_token
+      detach_critic_input: null
+      cfgrl_guidance_scale: 1.0
+      unconditional_prob: 0.1
+      guidance_type: positive
+      positive_only_conditional: true
+  fsdp_config:
+    strategy: fsdp
+    sharding_strategy: no_shard
+    gradient_checkpointing: true
+    cpu_offload: false
+    offload_pin_memory: false
+    reshard_after_forward: true
+    enable_gradient_accumulation: true
+    forward_prefetch: false
+    limit_all_gathers: false
+    backward_prefetch: null
+    use_orig_params: false
+    use_liger_kernel: false
+    mixed_precision:
+      param_dtype: null
+      reduce_dtype: null
+      buffer_dtype: null
+    amp_autocast:
+      enabled: false
+      precision: bf16
+    grad_scaler:
+      enabled: false
+      init_scale: null
+      growth_interval: null
+  group_name: ActorGroup
+  training_backend: fsdp
+  micro_batch_size: 4
+  global_batch_size: 128
+  seed: 0
+  optim:
+    lr: 1.0e-05
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-08
+    weight_decay: 1.0e-10
+    clip_grad: 1.0
+    lr_scheduler: cosine
+    lr_warmup_steps: 5000
+    total_training_steps: 30000
+    min_lr: 0.0
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor,env,rollout: all
+  tracer:
+    enable: false
+runner:
+  task_type: sft
+  logger:
+    log_path: /root/rlinf_recap/RLinf/logs/cfg_rl/cfg_rl_openpi-20260930-11:58:09
+    project_name: rlinf
+    experiment_name: cfg_sft
+    logger_backends:
+    - tensorboard
+  max_epochs: -1
+  max_steps: 30000
+  val_check_interval: -1
+  save_interval: 3000
+  resume_dir: /root/rlinf_recap/RLinf/logs/cfg_rl/cfg_rl_openpi-20260929-00:58:47/cfg_sft/checkpoints/global_step_9000
+  per_worker_log: false
+  per_worker_log_path: null
+data:
+  num_workers: 4
+  advantage_tag: fail300_N10_ckpt3000_q30
+  balance_dataset_weights: true
+  seed: 42
+  train_data_paths:
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_sft
+    type: sft
+    weight: 1.0
+  - dataset_path: /root/rlinf_recap/datasets/RECAP-Libero10-Task0-48succ-Data/libero10_task0_train
+    type: rollout
+    weight: 1.0
+algorithm:
+  adv_type: gae
+reward:
+  use_reward_model: false
+critic:
+  use_critic_model: false

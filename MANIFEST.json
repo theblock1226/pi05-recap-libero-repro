@@ -1,7 +1,7 @@
 {
-  "total_files": 185,
-  "total_bytes": 81408961,
-  "total_mib": 77.64,
+  "total_files": 253,
+  "total_bytes": 171714402,
+  "total_mib": 163.76,
   "by_top": {
     ".gitignore": {
       "n": 1,
@@ -9,19 +9,23 @@
     },
     "EXCLUDED_WEIGHTS_AND_DATA.md": {
       "n": 1,
-      "bytes": 1264
+      "bytes": 1563
     },
     "README.md": {
       "n": 1,
-      "bytes": 2024
+      "bytes": 2407
     },
     "REPRODUCTION_REPORT.md": {
       "n": 1,
-      "bytes": 1644
+      "bytes": 1774
+    },
+    "STEP30000.md": {
+      "n": 1,
+      "bytes": 1907
     },
     "artifacts": {
-      "n": 144,
-      "bytes": 81061021
+      "n": 211,
+      "bytes": 171363743
     },
     "meta": {
       "n": 5,
@@ -31,5 +35,6 @@
       "n": 32,
       "bytes": 277412
     }
-  }
+  },
+  "note": "step 30000 update adds final curves, Task0 x50 eval, success videos; weights excluded"
 }

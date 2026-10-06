@@ -24,13 +24,17 @@
    - `.../cfg_sft/checkpoints/global_step_6000|9000/actor/model_state_dict/full_weights.pt`
    - 或 deploy：`model.safetensors`（各约 7.8G）——**未纳入本仓库**
 
-## 关键结论（vanilla 仿真，无 CFG guidance）
+## 关键结论
 
-- CFG 停于 **9000**（计划 30000）；保留 6000
-- Task0×10：**6000 = 40%**，**9000 = 30%**
-- 9000 × libero_10×10：overall **3%**（仅 Task0 非零）
+9000 步时的中期记录仍留在仓库里。训练后来跑完 **30000** 步，对照见 `STEP30000.md`。
 
-详见 `artifacts/evidence/*.json` 与 `artifacts/logs/plots_*`。
+- Task 0 × 50，同一份 step 30000 权重：普通前向 **50%**（25/50），CFG 正条件 **64%**（32/50）
+- 文档对照：few-shot SFT **48.8%** → RECAP **66.5%**（未在本机 50 次协议上重测）
+- 12000 步 libero-10 × 10：overall **6%**，仍然只有 Task 0 非零
+- 9000 步中期：Task0×10 为 6000 **40%**、9000 **30%**；libero-10 overall **3%**
+
+最终对比图：`artifacts/logs/plots_eval/09_task0_doc_vs_cfg30000.png`  
+CFG 成功视频：`artifacts/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/`
 
 ## GitHub 说明
 

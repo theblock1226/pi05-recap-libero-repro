@@ -1,0 +1,130 @@
+{
+  "scored_successes": [
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+  ],
+  "extra_trials": 0,
+  "success_videos": [
+    {
+      "index": 0,
+      "trial": 0,
+      "scored": true,
+      "steps": 324,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_00_trial000.mp4"
+    },
+    {
+      "index": 1,
+      "trial": 2,
+      "scored": true,
+      "steps": 301,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_01_trial002.mp4"
+    },
+    {
+      "index": 2,
+      "trial": 3,
+      "scored": true,
+      "steps": 296,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_02_trial003.mp4"
+    },
+    {
+      "index": 3,
+      "trial": 4,
+      "scored": true,
+      "steps": 356,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_03_trial004.mp4"
+    },
+    {
+      "index": 4,
+      "trial": 5,
+      "scored": true,
+      "steps": 289,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_04_trial005.mp4"
+    },
+    {
+      "index": 5,
+      "trial": 8,
+      "scored": true,
+      "steps": 311,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_05_trial008.mp4"
+    },
+    {
+      "index": 6,
+      "trial": 10,
+      "scored": true,
+      "steps": 258,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_06_trial010.mp4"
+    },
+    {
+      "index": 7,
+      "trial": 11,
+      "scored": true,
+      "steps": 302,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_07_trial011.mp4"
+    },
+    {
+      "index": 8,
+      "trial": 12,
+      "scored": true,
+      "steps": 301,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_08_trial012.mp4"
+    },
+    {
+      "index": 9,
+      "trial": 13,
+      "scored": true,
+      "steps": 289,
+      "path": "/root/rlinf_recap/logs/libero_eval_cfg30000_task0_x50/cfg_positive/videos/success_09_trial013.mp4"
+    }
+  ],
+  "mode": "cfg_positive",
+  "next_trial": 50,
+  "running_success_rate": 0.64
+}
